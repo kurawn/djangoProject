@@ -1,0 +1,1 @@
+from bankid import create_bankid_test_server_cert_and_key
