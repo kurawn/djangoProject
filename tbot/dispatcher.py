@@ -21,7 +21,7 @@ def text_messages(message: types.Message):
         user_in_chat = tbot.get_chat_member(chat_id=chat.chat_id, user_id=message.from_user.id)
         print(11)
         print(user_in_chat)
-        if user_in_chat.status in ['member', 'creator']:
+        if user_in_chat.status in ['member', 'creator', 'administrator']:
             link = tbot.create_chat_invite_link(chat_id=chat.chat_id,
                                                 name=message.text.replace('@', '').split(' ')[1] + ' ' + str(message.from_user.id),
                                                 creates_join_request=True)
