@@ -42,15 +42,12 @@ class UserAdmin(admin.ModelAdmin):
     def get_refer_of(self, obj):
         server_url = BotConfig.objects.filter(is_active=True).first()
         users = obj.user_set.all()
-        print(users)
-        if server_url:
-            server_url = server_url.server_url + f'/admin/tbot/user/{user.pk}/'
-        else:
-            server_url = 1
         text = ''
+        url = server_url.server_url + f'/admin/tbot/user/'
         for user in users:
             print(user)
-
+            server_url = url + str(user.pk)
+            print(1)
             print(f'<a href="{server_url}">{str(user.name)} {str(user.username)}</a>\n')
             text += f'<a href="{server_url}">{str(user.name)}  {str(user.username)}</a>\n'
         return format_html(text)
