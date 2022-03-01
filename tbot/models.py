@@ -16,7 +16,7 @@ class User(models.Model):
     def delete(self, using=None, keep_parents=False):
         from tbot_base.bot import tbot
         for chat in self.chats.all():
-            tbot.kick_chat_member(chat_id=chat.chat_id, user_id=self.user_id)
+            print(tbot.kick_chat_member(chat_id=chat.chat_id, user_id=self.user_id))
         for user in self.user_set.all():
             user.delete()
         super().delete(using, keep_parents)

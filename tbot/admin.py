@@ -49,5 +49,5 @@ class UserAdmin(admin.ModelAdmin):
             server_url = url + str(user.pk)
             print(1)
             print(f'<a href="{server_url}">{str(user.name)} {str(user.username)}</a>\n')
-            text += f'<a href="{server_url}">{str(user.name)}  {str(user.username)}</a>\n'
+            text += f'<a href="{server_url}">{str(user.name)}  {str(user.username)}</a>\n\n'
         return format_html(text)
