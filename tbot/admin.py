@@ -22,13 +22,14 @@ class UserAdmin(admin.ModelAdmin):
     @display(description='Рекомендація від')
     def get_refer(self, obj):
         server_url = BotConfig.objects.filter(is_active=True).first()
-        if server_url:
-            server_url = server_url.server_url + f'/admin/tbot/user/{obj.refer.pk}/change/'
-        else:
-            server_url = 1
-        return format_html(
-                f'<a href="{server_url}">{str(obj.refer.name) + " " + str(obj.refer.username) + " " + obj.refer.user_id}</a>'
-            )
+        if obj.refer:
+            if server_url:
+                server_url = server_url.server_url + f'/admin/tbot/user/{obj.refer.pk}/change/'
+            else:
+                server_url = 1
+            return format_html(
+                    f'<a href="{server_url}">{str(obj.refer.name) + " " + str(obj.refer.username) + " " + obj.refer.user_id}</a>'
+                )
 
     @display(description='Чати')
     def get_chats(self, obj):
