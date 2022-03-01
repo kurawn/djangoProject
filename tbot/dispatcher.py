@@ -8,9 +8,10 @@ from .models import Chat, User
 
 @tbot.message_handler(commands=['start'])
 def start_messages(message: types.Message):
-    tbot.send_message(message.from_user.id, 'Чтоб добавить пользователя, напишите #StandForUkraine_Secure + тег '
-                                            'человека в тг Система выдаст вам ссылку, которую нужно будет дать лично '
-                                            'приглашенному')
+    tbot.send_message(message.from_user.id,
+                      'Чтоб добавить пользователя, напишите «Пример: #StandForUkraine_Secure @user» '
+                      'Система выдаст вам ссылку, которую нужно будет дать лично '
+                      'приглашенному')
 
 
 @tbot.message_handler(func=lambda message: True)
@@ -21,7 +22,8 @@ def text_messages(message: types.Message):
         user_in_chat = tbot.get_chat_member(chat_id=chat.chat_id, user_id=message.from_user.id)
         if user_in_chat.status in ['member', 'creator', 'administrator']:
             link = tbot.create_chat_invite_link(chat_id=chat.chat_id,
-                                                name=message.text.replace('@', '').split(' ')[1] + ' ' + str(message.from_user.id),
+                                                name=message.text.replace('@', '').split(' ')[1] + ' ' + str(
+                                                    message.from_user.id),
                                                 creates_join_request=True)
             tbot.send_message(message.from_user.id, link.invite_link)
             refer, created_refer = User.objects.get_or_create(user_id=message.from_user.id)
@@ -57,7 +59,7 @@ def join_chat_user(message: types.Message):
             tbot.revoke_chat_invite_link(chat_id=message.chat.id, invite_link=message.invite_link.invite_link)
             chat = Chat.objects.filter(chat_id=message.chat.id).last()
             if not chat:
-                chat =Chat.objects.create(name=message.chat.title, chat_id=message.chat.id)
+                chat = Chat.objects.create(name=message.chat.title, chat_id=message.chat.id)
                 chat.name = message.chat.title
                 chat.save()
             user, created = User.objects.get_or_create(user_id=message.from_user.id)
@@ -71,4 +73,6 @@ def join_chat_user(message: types.Message):
         except Exception as e:
             print(e)
     else:
+        print(message.chat.id)
+        print(message.from_user.id)
         tbot.decline_chat_join_request(chat_id=message.chat.id, user_id=message.from_user.id)
