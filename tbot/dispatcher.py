@@ -63,7 +63,7 @@ def join_chat_user(message: types.Message):
             user, created = User.objects.get_or_create(user_id=message.from_user.id)
             refer, created_refer = User.objects.get_or_create(user_id=message.invite_link.name.split(' ')[1])
             if created:
-                user.name = message.from_user.first_name + ' ' + message.from_user.last_name
+                user.name = f'{str(message.from_user.first_name)} {str(message.from_user.last_name)}'
                 user.username = message.from_user.username
                 user.refer = refer
             user.chats.add(chat)
