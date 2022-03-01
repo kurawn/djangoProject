@@ -19,8 +19,6 @@ def text_messages(message: types.Message):
     chat = Chat.objects.filter(name=chat_name).last()
     if chat:
         user_in_chat = tbot.get_chat_member(chat_id=chat.chat_id, user_id=message.from_user.id)
-        print(11)
-        print(user_in_chat)
         if user_in_chat.status in ['member', 'creator', 'administrator']:
             link = tbot.create_chat_invite_link(chat_id=chat.chat_id,
                                                 name=message.text.replace('@', '').split(' ')[1] + ' ' + str(message.from_user.id),
@@ -50,6 +48,7 @@ def add_chat(message: types.Message):
 
 @tbot.chat_join_request_handler(func=lambda message: True)
 def join_chat_user(message: types.Message):
+    print(message)
     user_name = message.from_user.username
     user_name_in_link = message.invite_link.name.replace('@', '').split(' ')[0]
     if user_name == user_name_in_link:
