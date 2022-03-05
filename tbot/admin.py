@@ -14,7 +14,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     filter_horizontal = ['chats',]
-    list_display = ['pk', 'name', 'get_refer',]
+    list_display = ['pk', 'name', 'username', 'get_refer',]
     fields = ['name', 'user_id', 'username', 'get_refer', 'get_chats', 'get_refer_of']
     readonly_fields = ['name', 'user_id', 'username', 'get_refer', 'get_chats', 'get_refer_of']
     search_fields = ['user_id', 'username', 'name']
